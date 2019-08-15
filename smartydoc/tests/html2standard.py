@@ -1,6 +1,6 @@
 # vi: set ft=python sts=4 ts=4 sw=4 et:
 
-from smartydoc.ipynb2html.ipynbhtmlparser import IpyNBHTMLParser
+from smartydoc.ipynb2html import IpyNBHTMLParser
 
 def module_test():
     # load test.html
