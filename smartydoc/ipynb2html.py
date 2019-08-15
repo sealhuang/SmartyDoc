@@ -91,7 +91,7 @@ class IpyNBHTMLParser(HTMLParser):
             split_content = self.out_html.split('\n')
             cover_start_flag = False
             for line in split_content:
-                print(line)
+                #print(line)
                 f.write(line+'\n')
                 if line=="<article id='cover'>":
                     cover_start_flag = True
