@@ -7,6 +7,7 @@ class IpyNBHTMLParser(HTMLParser):
     def __init__(self):
         super(IpyNBHTMLParser, self).__init__()
         self.out_html = ''
+        self.toc_html = ''
         self.tag_stack = []
 
     def handle_starttag(self, tag, attrs):
@@ -43,6 +44,9 @@ class IpyNBHTMLParser(HTMLParser):
                 for key in tag_content:
                     h_content.append("%s='%s'"%(key, tag_content[key]))
                 self.out_html += '<' + ' '.join(h_content) + '>\n'
+            # get TOC info
+            if tag in ['h2', 'h3']:
+                self.toc_html += '<li><a href="#%s"></a></li>\n'%(tag_content['id'])
         # XXX: tags to be ignored
         elif tag in ['br']:
             self.out_html += '<' + tag + '>'
@@ -63,8 +67,6 @@ class IpyNBHTMLParser(HTMLParser):
                 self.out_html += '</' + tag + '>\n'
                 self.tag_stack.pop(-1)
                 if tag=='h1' or tag=='h2':
-                    self.out_html += '</' + tag + '>\n'
-                    self.tag_stack.pop(-1)
                     self.tag_stack.append('div')
                     self.out_html += '<div>\n'
         elif tag=='body':
@@ -82,4 +84,23 @@ class IpyNBHTMLParser(HTMLParser):
 
     def handle_charref(self, name):
         pass
+
+    def export2html(self, html_file):
+        with open(html_file, 'w') as f:
+            split_toc = self.toc_html.split('\n')
+            split_content = self.out_html.split('\n')
+            cover_start_flag = False
+            for line in split_content:
+                print(line)
+                f.write(line+'\n')
+                if line=="<article id='cover'>":
+                    cover_start_flag = True
+                if line=='</article>' and cover_start_flag:
+                    f.write('<article id="contents">\n')
+                    f.write('<h2>目录</h2>\n')
+                    f.write('<ul>\n')
+                    for item in split_toc:
+                        f.write(item+'\n')
+                    f.write('</ul>\n</article>\n')
+                    cover_start_flag = False
 
