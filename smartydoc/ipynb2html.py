@@ -25,7 +25,10 @@ class IpyNBHTMLParser(HTMLParser):
                 self.tag_stack.append(tag)
                 h_content = [tag]
                 for key in tag_content:
-                    h_content.append("%s='%s'"%(key, tag_content[key]))
+                    if key=='id':
+                        h_content.append("%s='%s-title'"%(key, tag_content[key]))
+                    else:
+                        h_content.append("%s='%s'"%(key, tag_content[key]))
                 self.out_html += '<' + ' '.join(h_content) + '>\n'
             elif tag=='h3':
                 if self.tag_stack[-1]=='section':
@@ -36,7 +39,10 @@ class IpyNBHTMLParser(HTMLParser):
                 self.tag_stack.append(tag)
                 h_content = [tag]
                 for key in tag_content:
-                    h_content.append("%s='%s'"%(key, tag_content[key]))
+                    if key=='id':
+                        h_content.append("%s='%s-title'"%(key, tag_content[key]))
+                    else:
+                        h_content.append("%s='%s'"%(key, tag_content[key]))
                 self.out_html += '<' + ' '.join(h_content) + '>\n'
             else:
                 self.tag_stack.append(tag)
@@ -46,7 +52,7 @@ class IpyNBHTMLParser(HTMLParser):
                 self.out_html += '<' + ' '.join(h_content) + '>\n'
             # get TOC info
             if tag in ['h2', 'h3']:
-                self.toc_html += '<li><a href="#%s"></a></li>\n'%(tag_content['id'])
+                self.toc_html += '<li><a href="#%s-title"></a></li>\n'%(tag_content['id'])
         # XXX: tags to be ignored
         elif tag in ['br']:
             self.out_html += '<' + tag + '>'

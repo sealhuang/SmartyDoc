@@ -11,8 +11,8 @@ def module_test():
     parser = IpyNBHTMLParser()
     for line in content:
         #print(line)
-        print(parser.tag_stack)
-        #parser.feed(line)
+        #print(parser.tag_stack)
+        parser.feed(line)
 
     parser.export2html('test_standard.html')
     #with open('test_standard.html', 'w') as f:
