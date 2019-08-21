@@ -79,6 +79,7 @@ class IpyNBHTMLParser(HTMLParser):
             while self.tag_stack[-1] in ['article', 'div', 'section']:
                 self.out_html += '</' + self.tag_stack[-1] + '>\n'
                 self.tag_stack.pop(-1)
+            self.out_html += '</body>\n'
             self.tag_stack.pop(-1)
         else:
             print(self.tag_stack)
