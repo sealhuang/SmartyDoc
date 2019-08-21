@@ -15,8 +15,6 @@ def module_test():
         parser.feed(line)
 
     parser.export2html('test_standard.html')
-    #with open('test_standard.html', 'w') as f:
-    #    f.write(parser.out_html)
 
 
 if __name__=='__main__':
