@@ -92,7 +92,7 @@ class IpyNBHTMLParser(HTMLParser):
     def handle_charref(self, name):
         pass
 
-    def export2html(self, html_file):
+    def export2html(self, html_file, include_contents=True):
         with open(html_file, 'w') as f:
             split_toc = self.toc_html.split('\n')
             split_content = self.out_html.split('\n')
@@ -103,11 +103,12 @@ class IpyNBHTMLParser(HTMLParser):
                 if line=="<article id='cover'>":
                     cover_start_flag = True
                 if line=='</article>' and cover_start_flag:
-                    f.write('<article id="contents">\n')
-                    f.write('<h2>目录</h2>\n')
-                    f.write('<ul>\n')
-                    for item in split_toc:
-                        f.write(item+'\n')
-                    f.write('</ul>\n</article>\n')
+                    if include_contents:
+                        f.write('<article id="contents">\n')
+                        f.write('<h2>目录</h2>\n')
+                        f.write('<ul>\n')
+                        for item in split_toc:
+                            f.write(item+'\n')
+                            f.write('</ul>\n</article>\n')
                     cover_start_flag = False
 
