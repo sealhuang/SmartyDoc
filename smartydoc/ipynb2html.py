@@ -17,11 +17,14 @@ class IpyNBHTMLParser(HTMLParser):
         # XXX: to be extened
         if tag not in ['meta', 'link', 'img', 'br', 'a']:
             if tag=='h1' or tag=='h2':
-                while self.tag_stack[-1] in ['article', 'div', 'section']:
+                while self.tag_stack[-1] in ['article', 'article_content',
+                                             'div', 'section']:
                     self.out_html += '</' + self.tag_stack[-1] + '>\n'
                     self.tag_stack.pop(-1)
                 self.tag_stack.append('article')
                 self.out_html += "<article id='%s'>\n"%(tag_content['id'])
+                self.tag_stack.append('article_content')
+                self.out_html += "<article_content>\n"
                 self.tag_stack.append(tag)
                 h_content = [tag]
                 for key in tag_content:
@@ -76,7 +79,8 @@ class IpyNBHTMLParser(HTMLParser):
                     self.tag_stack.append('div')
                     self.out_html += '<div>\n'
         elif tag=='body':
-            while self.tag_stack[-1] in ['article', 'div', 'section']:
+            while self.tag_stack[-1] in ['article', 'article_content',
+                                         'div', 'section']:
                 self.out_html += '</' + self.tag_stack[-1] + '>\n'
                 self.tag_stack.pop(-1)
             self.out_html += '</body>\n'
@@ -105,10 +109,11 @@ class IpyNBHTMLParser(HTMLParser):
                 if line=='</article>' and cover_start_flag:
                     if include_contents:
                         f.write('<article id="contents">\n')
+                        f.write('<article_content>\n')
                         f.write('<h2>目录</h2>\n')
                         f.write('<ul>\n')
                         for item in split_toc:
                             f.write(item+'\n')
-                            f.write('</ul>\n</article>\n')
+                            f.write('</ul>\n</article_content>\n</article>\n')
                     cover_start_flag = False
 
