@@ -93,14 +93,13 @@ unknown type  {{ cell.type }}
 {%- endblock execute_result %}
 
 {% block stream_stdout -%}
-{#
-  <div class="output_subarea output_stream output_stdout output_text">
+
   <p>
   {{- output.text | ansi2html -}}
   </p>
-  </div>
-#}
+{#
 {{- output.text -}}
+#}
 {%- endblock stream_stdout %}
 
 {% block stream_stderr -%}
@@ -122,9 +121,9 @@ unknown type  {{ cell.type }}
 {%- endblock data_svg %}
 
 {% block data_html scoped -%}
-<div class="output_html rendered_html output_subarea {{ extra_class }}">
+{#<div class="output_html rendered_html output_subarea {{ extra_class }}"> #}
 {{ output.data['text/html'] }}
-</div>
+{#</div>#}
 {%- endblock data_html %}
 
 {% block data_markdown scoped -%}
