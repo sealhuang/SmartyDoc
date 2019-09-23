@@ -4,8 +4,8 @@ A workflow for report generation based on Jupyter-Notebook and Weasyprint.
 
 ## Python-based SVG editor
 
-There is an utility include in the repo that helps to edit and concatenate SVG
-files. It is especially directed at scientists preparing final figures
+There is an utility included in the repo that helps to edit and concatenate
+SVG files. It is especially directed at scientists preparing final figures
 for submission to journal. So far it supports arbitrary placement and
 scaling of svg figures and adding markers, such as labels.
 

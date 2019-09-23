@@ -217,11 +217,17 @@ class SVGFigure(object):
         self._height = 0
 
         if width:
-            self._width = width.value
-            self.width = width
+            # XXX: for compatibility of weasyprint, we convert the 
+            # unit of width to px
+            px_width = width.to('px')
+            self._width = px_width.value
+            self.width = px_width
         if height:
-            self._height = height.value
-            self.height = height
+            # XXX: for compatibility of weasyprint, we convert the 
+            # unit of height to px
+            px_height = height.to('px')
+            self._height = px_height.value
+            self.height = px_height
 
     @property
     def width(self):
