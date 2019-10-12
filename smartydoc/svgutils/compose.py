@@ -18,7 +18,7 @@ from __future__ import absolute_import
 import os
 import re
 
-import .transform as _transform
+from . import transform as _transform
 
 CONFIG = {'svg.file_path': '.',
           'figure.save_path' : '.',
