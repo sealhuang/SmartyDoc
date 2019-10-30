@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="16px" height="16px" viewBox="0 0 16 16" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 53.2 (72643) - https://sketchapp.com -->
+    <title>分组 4</title>
+    <desc>Created with Sketch.</desc>
+    <defs>
+        <polygon id="path-1111" points="-4.02106936e-16 0 16 0 16 15 -4.02106936e-16 15"></polygon>
+        <linearGradient x1="50%" y1="0.995038007%" x2="50%" y2="100%" id="linearGradient-3">
+            <stop stop-color="#FDC401" offset="0%"></stop>
+            <stop stop-color="#F44C4C" offset="100%"></stop>
+        </linearGradient>
+    </defs>
+    <g id="Page-12" stroke="none" stroke-width="0" fill="none" fill-rule="evenodd">
+        <rect id="rec-copy-5" fill="#E5F7FF" x="0" y="0" width="16" height="16" rx="0"></rect>
+            <path d="M11.5010012,0 C9.77234546,0 8.53374249,1.62982684 7.99979195,2.4916394 C7.46552935,1.62982684 6.22765454,0 4.49868671,0 C2.01783996,0 0,2.33875472 0,5.2132043 C0,6.55695725 0.871505474,8.4840659 1.92952435,9.49223426 C3.39302525,11.4593867 7.50713858,15 8.01518737,15 C8.53207812,15 12.5578758,11.5281576 14.0479026,9.51606468 C15.1243336,8.48983308 16,6.56033051 16,5.2132043 C16,2.33875472 13.98216,0 11.5010012,0" id="Fill-10" fill="url(#linearGradient-3)"></path>
+    </g>
+</svg>
