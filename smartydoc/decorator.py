@@ -1,7 +1,7 @@
 # vi: set ft=python sts=4 ts=4 sw=4 et:
 
 import os
-import random
+#import random
 
 import plotly.graph_objects as go
 import svgutils.compose as sc
