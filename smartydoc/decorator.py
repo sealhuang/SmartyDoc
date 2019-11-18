@@ -24,7 +24,7 @@ class FigCounter(object):
         #if not os.path.exists(self.tmp_dir):
         #    os.makedirs(self.tmp_dir, mode=0o755)
 
-    def add_title(self, fig, title):
+    def add_title(self, fig, title, y_pos=-0.2):
         """
         `fig`: a plotly/svgutils Figure object.
         `title`: figure title.
@@ -34,17 +34,24 @@ class FigCounter(object):
         # if input a plotly Figure object, convert it into a svg file first
         title_txt = '%s%s  '%(self.prefix, self.current_num) + title
         if isinstance(fig, go.Figure):
+            title_annotation = go.layout.Annotation(
+                            xref = 'paper',
+                            yref = 'paper',
+                            x = 0.5,
+                            y = y_pos,
+                            xanchor = 'center',
+                            yanchor = 'top',
+                            text = title_txt,
+                            font = dict(
+                                family = self.font_family,
+                                size = self.font_size,
+                                color = "#000000",
+                            ),
+                            showarrow = False,
+            )
+
             fig.update_layout(
-                    title=dict(
-                        text=title_txt,
-                        x=0.5,
-                        y=0.15,
-                        font=dict(
-                            family=self.font_family,
-                            size=self.font_size,
-                            color="#000000",
-                        )
-                    )
+                annotations = list(fig.layout['annotations']) + [title_annotation],
             )
  
             # increasing counter number
