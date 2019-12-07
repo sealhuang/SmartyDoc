@@ -145,6 +145,7 @@ class IpyNBHTMLParser(HTMLParser):
                 if line=="<article id='cover'>":
                     cover_start_flag = True
                 if line=='</article>' and cover_start_flag:
+                    # add TOC
                     if toc_level==1:
                         f.write('<article id="contents">\n')
                         f.write('<article_content>\n')
@@ -154,42 +155,31 @@ class IpyNBHTMLParser(HTMLParser):
                             if not k=='hlevel':
                                 f.write('<li><a href="#%s-title"></a></li>\n'%(k))
                         f.write('</ul>\n</article_content>\n</article>\n')
-                    elif toc_level==2:
+                    elif toc_level>1:
                         f.write('<article id="contents">\n')
                         f.write('<article_content>\n')
                         f.write('<h2>目录</h2>\n')
                         for h2 in self.toc_tree:
-                            if not h2=='hlevel':
-                                f.write('<h3>%s</h3>\n'%(h2))
-                                h3s = self.toc_tree[h2]
-                                if h3s:
-                                    f.write('<ul class="h3">\n')
-                                    for h3 in h3s:
-                                        if not h3=='hlevel':
-                                            f.write('<li><a href="#%s-title"></a></li>\n'%(h3))
-                                    f.write('</ul>\n')
-                        f.write('</article_content>\n</article>\n')
-                    elif toc_level==3:
-                        f.write('<article id="contents">\n')
-                        f.write('<article_content>\n')
-                        f.write('<h2>目录</h2>\n')
-                        for h2 in self.toc_tree:
-                            if not h2=='hlevel':
-                                f.write('<h3>%s</h3>\n'%(h2))
-                                h3s = self.toc_tree[h2]
-                                if h3s:
-                                    f.write('<ul class="h3">\n')
-                                    for h3 in h3s:
-                                        if not h3=='hlevel':
-                                            f.write('<li><a href="#%s-title"></a></li>\n'%(h3))
-                                            h4s = h3s[h3]
-                                            if h4s:
-                                                f.write('<ul class="h4">\n')
-                                                for h4 in h4s:
-                                                    if not h4=='hlevel':
-                                                        f.write('<li><a href="#%s-title"></a></li>\n'%(h4))
-                                                f.write('</ul>\n')
-                                    f.write('</ul>\n')
+                            if h2=='hlevel':
+                                continue
+                            f.write('<h3>%s</h3>\n'%(h2))
+                            h3s = self.toc_tree[h2]
+                            if h3s:
+                                f.write('<ul class="h3">\n')
+                                for h3 in h3s:
+                                    if h3=='hlevel':
+                                        continue
+                                    f.write('<li><a href="#%s-title"></a></li>\n'%(h3))
+                                    if toc_level>2:
+                                        h4s = h3s[h3]
+                                        if h4s:
+                                            f.write('<ul class="h4">\n')
+                                            for h4 in h4s:
+                                                if h4=='hlevel':
+                                                    continue
+                                                f.write('<li><a href="#%s-title"></a></li>\n'%(h4))
+                                            f.write('</ul>\n')
+                                f.write('</ul>\n')
                         f.write('</article_content>\n</article>\n')
                     else:
                         # no TOC

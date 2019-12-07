@@ -14,7 +14,7 @@ def module_test():
         #print(parser.tag_stack)
         parser.feed(line)
 
-    parser.export2html('test_standard.html')
+    parser.export2html('test_standard.html', toc_level=1)
 
 
 if __name__=='__main__':
