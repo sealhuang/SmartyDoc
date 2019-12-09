@@ -134,14 +134,38 @@ class IpyNBHTMLParser(HTMLParser):
     def handle_charref(self, name):
         pass
 
-    def export2html(self, html_file, toc_level=1):
+    def export2html(self, html_file, toc_level=1,
+                    include_article_summary=False):
         """toc_level: 0 for no toc"""
         with open(html_file, 'w') as f:
             split_content = self.out_html.split('\n')
             cover_start_flag = False
+            toc_over_flag = False
             for line in split_content:
                 #print(line)
+                
+                # add article summary
+                if line.startswith('<article id=') and toc_over_flag:
+                    if include_article_summary:
+                        h2_id = line[13:-2]
+                        f.write('<article class="article-summary">\n')
+                        f.write('<h2>%s</h2>\n'%(h2_id))
+                        h3s = self.toc_tree[h2_id]
+                        if h3s:
+                            f.write('<ul class="summary-list">\n')
+                            for h3 in h3s:
+                                if h3=='hlevel':
+                                    continue
+                                f.write('<li>%s</li>\n'%(h3))
+                            f.write('</ul>\n')
+                        f.write('</article>\n')
+                if line.startswith('<h2 id=') and include_article_summary:
+                    continue
+                if line[-5:]=='</h2>' and include_article_summary:
+                    continue
+                
                 f.write(line+'\n')
+                
                 if line=="<article id='cover'>":
                     cover_start_flag = True
                 if line=='</article>' and cover_start_flag:
@@ -186,4 +210,7 @@ class IpyNBHTMLParser(HTMLParser):
                         pass
 
                     cover_start_flag = False
+                    toc_over_flag = True
+
+
 
