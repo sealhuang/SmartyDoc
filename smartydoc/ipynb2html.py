@@ -11,12 +11,16 @@ class IpyNBHTMLParser(HTMLParser):
         self.tag_stack = []
         self.toc_tree = OrderedDict()
         self._cur_toc_pos = OrderedDict()
+        # heading index vars
+        self._h2_idx = 0
+        self._h3_idx = 0
+        self._h4_idx = 0
 
     def handle_starttag(self, tag, attrs):
         tag_content = {}
         for attr in attrs:
             tag_content[attr[0]] = attr[1]
-        # XXX: to be extened
+        # XXX: unpaired tags to be extened
         if tag not in ['meta', 'link', 'img', 'br', 'a']:
             if tag=='h1' or tag=='h2':
                 while self.tag_stack[-1] in ['article', 'article_content',
@@ -34,7 +38,13 @@ class IpyNBHTMLParser(HTMLParser):
                         h_content.append("%s='%s-title'"%(key, tag_content[key]))
                     else:
                         h_content.append("%s='%s'"%(key, tag_content[key]))
-                self.out_html += '<' + ' '.join(h_content) + '>\n'
+                if tag=='h1':
+                    self.out_html += '<' + ' '.join(h_content) + '>'
+                else:
+                    self._h2_idx += 1
+                    self._h3_idx = 0
+                    self._h4_idx = 0
+                    self.out_html += '<' + ' '.join(h_content) + '>' + str(self._h2_idx) + '. '
             elif tag=='h3':
                 if self.tag_stack[-1]=='section':
                     self.out_html += '</' + self.tag_stack[-1] + '>\n'
@@ -48,7 +58,9 @@ class IpyNBHTMLParser(HTMLParser):
                         h_content.append("%s='%s-title'"%(key, tag_content[key]))
                     else:
                         h_content.append("%s='%s'"%(key, tag_content[key]))
-                self.out_html += '<' + ' '.join(h_content) + '>\n'
+                self._h3_idx += 1
+                self._h4_idx = 0
+                self.out_html += '<' + ' '.join(h_content) + '>' + '.'.join([str(self._h2_idx), str(self._h3_idx)]) + ' '
             elif tag=='h4':
                 self.tag_stack.append(tag)
                 h_content = [tag]
@@ -57,7 +69,8 @@ class IpyNBHTMLParser(HTMLParser):
                         h_content.append("%s='%s-title'"%(key, tag_content[key]))
                     else:
                         h_content.append("%s='%s'"%(key, tag_content[key]))
-                self.out_html += '<' + ' '.join(h_content) + '>\n'
+                self._h4_idx += 1
+                self.out_html += '<' + ' '.join(h_content) + '>' + '.'.join([str(self._h2_idx), str(self._h3_idx), str(self._h4_idx)]) + ' '
             else:
                 self.tag_stack.append(tag)
                 h_content = [tag]
@@ -177,23 +190,34 @@ class IpyNBHTMLParser(HTMLParser):
                         f.write('<ul>\n')
                         for k in self.toc_tree:
                             if not k=='hlevel':
-                                f.write('<li><a href="#%s-title"></a></li>\n'%(k))
+                                f.write('<li>\n')
+                                f.write('<a href="#%s-title" class="toc-title"></a>\n'%(k))
+                                f.write('<div class="list-line"></div>\n')
+                                f.write('<a href="#%s-title" class="toc-page"></a>\n'%(k))
+                                f.write('</li>\n')
                         f.write('</ul>\n</article_content>\n</article>\n')
                     elif toc_level>1:
                         f.write('<article id="contents">\n')
                         f.write('<article_content>\n')
                         f.write('<h2>目录</h2>\n')
+                        _h2_tmp_idx = 1
                         for h2 in self.toc_tree:
                             if h2=='hlevel':
                                 continue
-                            f.write('<h3>%s</h3>\n'%(h2))
+                            f.write('<h3>%s</h3>\n'%(str(_h2_tmp_idx)+'. ' + h2))
+                            _h2_tmp_idx += 1
                             h3s = self.toc_tree[h2]
                             if h3s:
                                 f.write('<ul class="h3">\n')
                                 for h3 in h3s:
                                     if h3=='hlevel':
                                         continue
-                                    f.write('<li><a href="#%s-title"></a></li>\n'%(h3))
+                                    #f.write('<li><a href="#%s-title"></a><div class="list-line"></div></li>\n'%(h3))
+                                    f.write('<li>\n')
+                                    f.write('<a href="#%s-title" class="toc-title"></a>\n'%(h3))
+                                    f.write('<div class="list-line"></div>\n')
+                                    f.write('<a href="#%s-title" class="toc-page"></a>\n'%(h3))
+                                    f.write('</li>\n')
                                     if toc_level>2:
                                         h4s = h3s[h3]
                                         if h4s:
@@ -201,7 +225,12 @@ class IpyNBHTMLParser(HTMLParser):
                                             for h4 in h4s:
                                                 if h4=='hlevel':
                                                     continue
-                                                f.write('<li><a href="#%s-title"></a></li>\n'%(h4))
+                                                #f.write('<li><a href="#%s-title"></a><div class="list-line"></div></li>\n'%(h4))
+                                                f.write('<li>\n')
+                                                f.write('<a href="#%s-title" class="toc-title"></a>\n'%(h4))
+                                                f.write('<div class="list-line"></div>\n')
+                                                f.write('<a href="#%s-title" class="toc-page"></a>\n'%(h4))
+                                                f.write('</li>\n')
                                             f.write('</ul>\n')
                                 f.write('</ul>\n')
                         f.write('</article_content>\n</article>\n')
