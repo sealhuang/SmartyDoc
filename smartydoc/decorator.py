@@ -1,7 +1,9 @@
 # vi: set ft=python sts=4 ts=4 sw=4 et:
 
 import os
-#import random
+from math import ceil
+
+from PIL import Image
 
 import plotly.graph_objects as go
 import svgutils.compose as sc
@@ -9,8 +11,8 @@ import svgutils.compose as sc
 
 class FigCounter(object):
     """Used for generate figure/table number."""
-    def __init__(self, prefix, start_num=1,
-                 font_size=12, font_family='Courier New, monospace'):
+    def __init__(self, prefix, start_num=1, font_size=12,
+                 font_family='Courier New, monospace'):
         """
         `prefix`: string, e.g. fig, figure, table.
         `start_num`: int, default value 1.
@@ -20,20 +22,59 @@ class FigCounter(object):
         self.current_num = start_num
         self.font_size = font_size
         self.font_family = font_family
-        #self.tmp_dir = os.path.join('/tmp', 'smartydoc-figcounter')
-        #if not os.path.exists(self.tmp_dir):
-        #    os.makedirs(self.tmp_dir, mode=0o755)
+        self.output_width = 600
 
-    def add_title(self, fig, title, y_pos=-0.2):
+    def set_width(self, w):
+        """Set width of the output image in px."""
+        if isinstance(w, int):
+            self.output_width = w
+        else:
+            print('Invalid input value, only int data type supported.')
+
+    def add_title(self, fig, title, y_pos=-0.2, w=None):
         """
-        `fig`: a plotly/svgutils Figure object.
+        `fig`: a plotly/svgutils Figure object, or the path of a png file.
         `title`: figure title.
+        `w`: output image width in px.
         """
+        if isinstance(fig, str):
+            if not os.path.exists(fig):
+                print('File %s does exist!'%(fig))
+                return
+            if not os.path.splitext(os.path.abspath(fig))[-1]=='.png':
+                print('Only png image supported.')
+                return
+
+            im = Image.open(fig)
+            if w:
+                _w = w
+            else:
+                _w = self.output_width
+            _scalar = _w * 1.0 / im.width
+            
+            svg_fig = sc.Figure(_w, ceil(_scalar * im.height),
+                                sc.Image(
+                                    im.width,
+                                    im.height,
+                                    fig
+                                ).scale(_scalar)
+            )
+            
+            fig = svg_fig
+
         assert isinstance(fig, go.Figure) or isinstance(fig, sc.Figure)
 
         # if input a plotly Figure object, convert it into a svg file first
         title_txt = '%s%s  '%(self.prefix, self.current_num) + title
         if isinstance(fig, go.Figure):
+            # compute image size
+            if w:
+                _w = w
+            else:
+                _w = self.output_width
+            _scalar = _w * 1.0 / fig.layout.width
+            _h = fig.layout.height * _scalar
+           
             title_annotation = go.layout.Annotation(
                             xref = 'paper',
                             yref = 'paper',
@@ -51,6 +92,8 @@ class FigCounter(object):
             )
 
             fig.update_layout(
+                width = _w,
+                height = _h,
                 annotations = list(fig.layout['annotations']) + [title_annotation],
             )
  
@@ -59,17 +102,20 @@ class FigCounter(object):
 
             return fig
         else:
-            new_width = fig.width
-            new_height = fig.height
-            new_height.value += 10
+            # compute image size
+            if w:
+                _w = w
+            else:
+                _w = self.output_width
+            _scalar = _w * 1.0 / fig.width.value
+            _h = fig.height.value * _scalar + 25
 
             # add title
-            new_figure = sc.Figure(new_width.to('px').value,
-                                   new_height.to('px').value,
-                                   fig,
+            new_figure = sc.Figure(_w, _h,
+                                   fig.scale(_scalar),
                                    sc.Text(title_txt,
-                                           new_width.to('px').value/2,
-                                           new_height.to('px').value-5,
+                                           _w/2,
+                                           _h-5,
                                            anchor='middle',
                                            size=self.font_size,
                                            font=self.font_family,
