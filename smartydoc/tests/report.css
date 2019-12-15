@@ -1,0 +1,501 @@
+@charset "UTF-8";
+/* font */
+/* 
+@font-face {
+	font-family: SimSun;
+	src: url(fonts/SimSun.ttf);
+}
+@font-face {
+	font-family: SimHei;
+	src: url(fonts/SimHei.ttf);
+}
+*/
+/* page config */
+@page {
+	margin: 20mm;
+}
+@page :blank {
+	@top-left {
+		content: none;
+	}
+	@top-center {
+		background: none;
+		content: none;
+	}
+	@top-right {
+		content: none;
+	}
+	@bottom-left {
+		background: none;
+		content: none;
+	}
+	@bottom-center{
+		content: none;
+	}
+	@bottom-right {
+		background: none;
+		content: none;
+	}
+	margin: 0;
+}
+@page cover {
+	@top-left {
+		content: none;
+	}
+	@top-center {
+		background: none;
+		content: none;
+	}
+	@top-right {
+		content: none;
+	}
+	@bottom-left {
+		background: none;
+		content: none;
+	}
+	@bottom-center{
+		content: none;
+	}
+	@bottom-right {
+		background: none;
+		content: none;
+	}
+	margin: 0;
+}
+@page contents {
+	@top-left {
+		content: none;
+	}
+	@top-center {
+		background: none;
+		content: none;
+	}
+	@top-right {
+		content: none;
+	}
+	@bottom-left {
+		background: none;
+		content: none;
+	}
+	@bottom-center{
+		content: none;
+	}
+	@bottom-right {
+		background: none;
+		content: none;
+	}
+	counter-reset: page 0;
+}
+@page article-summary {
+	@top-left {
+		content: none;
+	}
+	@top-center {
+		background: none;
+		content: none;
+	}
+	@top-right {
+		content: none;
+	}
+	@bottom-left {
+		background: none;
+		content: none;
+	}
+	@bottom-center{
+		content: none;
+	}
+	@bottom-right {
+		background: none;
+		content: none;
+	}
+	margin: 0;
+}
+@page :left {
+	@top-left {
+		background: none;
+		content: none;
+	}
+	@top-center {
+		/* background-size: cover;
+		content: '';
+		display: block;
+		height: 5.5mm;
+		opacity: 1;
+		width: 170mm;
+		margin-bottom: 5.5mm; */
+	}
+	@top-right {
+		/* content: string(heading);
+		font-size: 10px;
+		height: 5.5mm;
+		vertical-align: middle;
+		width: 100%;
+		font-family: Heiti;
+		margin-bottom: 5.5mm;
+		color: #000000; */
+	}
+	@bottom-center{
+		text-align: center;
+		content: 'SmartyDoc Sample';
+		font-size: 8px;
+		color: #3F3F3F;
+	}
+	@bottom-right {
+		background: #00ABA9;
+		content: counter(page);
+		height: 5.5mm;
+		text-align: center;
+		font-size: 10px;
+		width: 5.5mm;
+		margin-top: 5.5mm;
+		color: #FFFFFF;
+	}
+}
+@page :right {
+	@top-left {
+		background: none;
+		content: none;
+	}
+	@top-center {
+		/* background-size: cover;
+		content: '';
+		display: block;
+		height: 5.5mm;
+		opacity: 1;
+		width: 170mm;
+		margin-bottom: 5.5mm; */
+	}
+	@top-right {
+		content: string(heading);
+		font-size: 10px;
+		height: 5.5mm;
+		vertical-align: middle;
+		width: 100%;
+		font-family: SimHei;
+		margin-bottom: 5.5mm;
+		color: #000000;
+	}
+	@bottom-center{
+		text-align: center;
+		content: 'SmartyDoc Sample';
+		font-size: 8px;
+		color: #3F3F3F;
+	}
+	@bottom-left {
+		background: #00ABA9;
+		content: counter(page);
+		height: 5.5mm;
+		text-align: center;
+		font-size: 10px;
+		width: 5.5mm;
+		margin-top: 5.5mm;
+		color: #FFFFFF;
+	}
+}
+/* global style */
+html{
+	font-family: SimSun;
+	color: #3F3F3F;
+}
+body,h1,h2,h3,h4,h5,h6,p,div,ul,li,ol,a{
+	margin: 0;
+	padding: 0;
+	list-style: none;
+}
+html body article{
+	display: block;
+	/* width: 210mm;
+	height: 297mm; */
+	font-size: 12px;
+	text-indent: 2em;
+	min-height: 257mm;
+	break-before: right;
+}
+article section{
+	margin: 10px 0;
+	line-height: 28px;
+}
+article section #img{
+	text-align: center;
+	margin:10px 0;
+}
+article section #img img{
+	width: 80%;
+}
+article table{
+	margin: 10px 0;
+	text-align: center;
+	width: 92%;
+	margin-left: 4%;
+	font-size: 12px;
+	border-collapse: collapse;
+}
+article table th,article table td{
+	border: 1px solid #000;
+}
+article table thead th,
+article table strong{
+	font-family: SimHei;
+	color:#00ABA9;
+}
+article section strong{
+	font-family: SimSun;
+}
+article section blockquote{
+	background: #DBF6F6;
+	border-radius: 8px;
+	padding: 5px;
+	margin: 10px 0;
+	line-height: 25px;
+}
+article section ul li{
+	display: inline-block;
+	text-indent: 0;
+	border:1px solid #00ABA9;
+	border-radius: 5px;
+	padding: 0 6px;
+	line-height: 21px;
+	margin: 2px 0;
+}
+/* cover */
+article#cover{
+	page: cover;
+	width: 210mm;
+	height: 297mm;
+	text-indent: 0;
+	text-align: center;
+	/* background: url(imgs1/cover.png) no-repeat center; */
+	background-size: cover;
+}
+article#cover h1{
+	font-family: SimHei;
+	color: #00ABA9;
+	font-size: 39px;
+	padding-top: 56mm;
+	line-height: 94px;
+	letter-spacing: 5px;
+}
+article#cover div{
+	padding-top: 70mm;
+	font-size: 14px;
+}
+article#cover address{
+	display: none;
+}
+article#cover testdate{
+	font-family: SimHei;
+	font-size: 16px;
+}
+/* TOC */
+article#contents{
+	width: 170mm;
+	page: contents;
+	text-indent: 0em;
+}
+article#contents h2{
+	font-family: SimHei;
+	text-align: center;
+	margin-bottom: 14px;
+	string-set: heading content();
+	font-size: 20px;
+}
+article#contents ul li{
+	font-size: 12px;
+	position: relative;
+}
+article#contents ul li a.toc-title{
+	color: inherit;
+	text-decoration: none;
+	background: #fff;
+	padding-right: 10px;
+	position: absolute;
+	left: 0;
+	top: 0;
+	z-index: 10;
+}
+article#contents ul li a.toc-title::before {
+  content: target-text(attr(href)); 
+}
+article#contents ul li a.toc-page{
+	text-decoration: none;
+	color: #3F3F3F;
+}
+article#contents ul li a.toc-page::after {
+	color: inherit;
+	content: target-counter(attr(href), page);
+	position:absolute;
+	text-align: right;
+	right: 0;
+	width: 5%;
+}
+article#contents ul li .list-line{
+	border-top:1px dashed #d8d8d8;
+	position:absolute;
+	top:8px;
+	width: 95%;
+}
+/* 章节页 */
+article.article-summary{
+	page: article-summary;
+	width: 210mm;
+	height: 297mm;
+	overflow: hidden;
+	position: relative;
+}
+article.article-summary::before {
+	content: '';
+	position: absolute;
+	/* background: url(imgs1/title_left.png) no-repeat center; */
+	left: 117px;
+  top: 66px;
+	width: 70px;
+	height: 244px;
+}
+article.article-summary::after {
+	content: '';
+	position: absolute;
+	width: 210mm;
+	height: 120mm;
+	bottom: 0;
+	left: 0;
+	/* background: url(imgs1/Image1.svg) no-repeat center; */
+	background-size: cover;
+}
+article.article-summary h2{
+	font-family: SourceHanSansCN-Medium;
+	margin: 80px 0 30px 124px;
+	font-size: 20px;
+	color: #00ABA9;
+	position: relative;
+	display: inline-block;
+	string-set: heading content();
+	line-height: 30px;
+}
+article.article-summary h2::before {
+	content: '';
+	position: absolute;
+	width: 46px;
+	height: 40px;
+	top: 5px;
+  	right: -32px;
+	/* background: url(imgs1/title_right.png) no-repeat center; */
+	background-size: cover;
+}
+article.article-summary h2::after {
+	position: absolute;
+	top: 1px;
+  	left: -46px;
+	color: #FFFFFF;
+}
+article:nth-child(3) h2::after {content: '1';}
+article:nth-child(5) h2::after {content: '2';}
+article:nth-child(7) h2::after {content: '3';}
+article:nth-child(9) h2::after {content: '4';}
+article:nth-child(11) h2::after {content: '5';}
+article:nth-child(13) h2::after {content: '6';}
+article:nth-child(15) h2::after {content: '7';}
+article.article-summary ul.summary-list{
+	margin-left: 144px;
+}
+article.article-summary ul.summary-list li{
+	font-family: SourceHanSansCN-Normal;
+	font-size: 12px;
+	color: #231916;
+	line-height: 15px;
+	margin-bottom: 10px;
+	padding-left: 26px;
+	position: relative;
+}
+article.article-summary ul.summary-list li::before {
+	content: '';
+	position: absolute;
+	width: 15px;
+	height: 15px;
+	top: 0px;
+  	left: 27px;
+	/* background: url(imgs1/list2.svg) no-repeat center; */
+	background-size: cover;
+}
+/* 3级标题 */
+article section h3{
+	font-family: SourceHanSansCN-Medium;
+	font-size: 18px;
+	color: #00ABA9;
+	line-height: 35px;
+	margin: 15px 0;
+	position: relative;
+	padding-left: 5px;
+}
+article section h3:first-child{
+	margin-top: 0;
+}
+article section h3::before {
+	content: '';
+	width: 25px;
+	height: 25px;
+	/* background: url(imgs1/list2.svg) no-repeat center; */
+	background-size: cover;
+	position: absolute;
+	left: 0px;
+	top: 6px;
+}
+/* 4级标题 */
+article#前言 h5,
+article#各年级的阅读表现分析 h4,
+article#分级阅读教学方案 h4,
+article#优秀实践故事 h4,
+article#附表结果 h5
+{
+	font-family: SourceHanSansCN-Regular;
+	line-height: 14px;
+	font-size: 14px;
+	color: #00ABA9;
+	padding-left: 20px;
+	margin: 6px 0 12px 0;
+	position: relative;
+}
+article#前言 h5::before,
+article#各年级的阅读表现分析 h4::before,
+article#分级阅读教学方案 h4::before,
+article#优秀实践故事 h4::before,
+article#附表结果 h5::before
+{
+	content:'';
+	width: 14px;
+	height: 14px;
+	background: #00ABA9;
+	position: absolute;
+	left: 24px;
+    top: 0;
+}
+/* 4级标题以下 */
+article#优秀实践故事 section{
+	page-break-before: always;
+}
+article#优秀实践故事 section rightalign{
+	text-align: right;
+	display: block;
+	width: 100%;
+}
+article#优秀实践故事 h5
+{
+	font-family: SourceHanSansCN-Regular;
+	line-height: 14px;
+	font-size: 14px;
+	color: #00ABA9;
+	padding-left: 20px;
+	margin: 5px 0;
+	position: relative;
+	padding-left: 10px;
+}
+article#优秀实践故事 h5::before{
+	content:'';
+	width: 3px;
+	height: 14px;
+	background: #00ABA9;
+	position: absolute;
+	left: 24px;
+	top: 0;
+}
+/* 二维码 */
+article#结语 section #img img{width: 150px;}
