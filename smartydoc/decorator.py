@@ -78,7 +78,7 @@ class FigCounter(object):
                 # default width is 700px
                 _scalar = _w * 1.0 / 700
 
-            if fig.layout.height is None:
+            if not fig.layout.height is None:
                 _h = fig.layout.height * _scalar
             else:
                 # default height is 450px
