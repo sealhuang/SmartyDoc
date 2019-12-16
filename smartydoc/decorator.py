@@ -72,8 +72,17 @@ class FigCounter(object):
                 _w = w
             else:
                 _w = self.output_width
-            _scalar = _w * 1.0 / fig.layout.width
-            _h = fig.layout.height * _scalar
+            if not fig.layout.width is None:
+                _scalar = _w * 1.0 / fig.layout.width
+            else:
+                # default width is 700px
+                _scalar = _w * 1.0 / 700
+
+            if fig.layout.height is None:
+                _h = fig.layout.height * _scalar
+            else:
+                # default height is 450px
+                _h = 450.0 * _scalar
            
             title_annotation = go.layout.Annotation(
                             xref = 'paper',
