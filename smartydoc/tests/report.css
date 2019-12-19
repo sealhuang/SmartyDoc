@@ -38,7 +38,7 @@
 	}
 	margin: 0;
 }
-@page cover {
+@page :first {
 	@top-left {
 		content: none;
 	}
@@ -85,30 +85,6 @@
 		content: none;
 	}
 	counter-reset: page 0;
-}
-@page article-summary {
-	@top-left {
-		content: none;
-	}
-	@top-center {
-		background: none;
-		content: none;
-	}
-	@top-right {
-		content: none;
-	}
-	@bottom-left {
-		background: none;
-		content: none;
-	}
-	@bottom-center{
-		content: none;
-	}
-	@bottom-right {
-		background: none;
-		content: none;
-	}
-	margin: 0;
 }
 @page :left {
 	@top-left {
@@ -195,6 +171,7 @@
 /* global style */
 html{
 	font-family: SimSun;
+	font-size: 11pt;
 	color: #3F3F3F;
 }
 body,h1,h2,h3,h4,h5,h6,p,div,ul,li,ol,a{
@@ -259,24 +236,24 @@ article section ul li{
 }
 /* cover */
 article#cover{
-	page: cover;
+	page: first;
 	width: 210mm;
 	height: 297mm;
 	text-indent: 0;
 	text-align: center;
-	/* background: url(imgs1/cover.png) no-repeat center; */
+	background: url(imgs/cover.png) no-repeat center;
 	background-size: cover;
 }
 article#cover h1{
 	font-family: SimHei;
-	color: #00ABA9;
+	color: #fbc847;
 	font-size: 39px;
 	padding-top: 56mm;
 	line-height: 94px;
 	letter-spacing: 5px;
 }
 article#cover div{
-	padding-top: 70mm;
+	padding-top: 15mm;
 	font-size: 14px;
 }
 article#cover address{
@@ -284,8 +261,10 @@ article#cover address{
 }
 article#cover testdate{
 	font-family: SimHei;
-	font-size: 16px;
+	color: #fbc847;
+	font-size: 20px;
 }
+
 /* TOC */
 article#contents{
 	width: 170mm;
@@ -298,6 +277,7 @@ article#contents h2{
 	margin-bottom: 14px;
 	string-set: heading content();
 	font-size: 20px;
+	color: #fbc847;
 }
 article#contents ul li{
 	font-size: 12px;
@@ -334,93 +314,19 @@ article#contents ul li .list-line{
 	top:8px;
 	width: 95%;
 }
-/* 章节页 */
-article.article-summary{
-	page: article-summary;
-	width: 210mm;
-	height: 297mm;
-	overflow: hidden;
-	position: relative;
+
+/* heading 2 */
+article h2{
+	font-family: SimHei;
+	font-size: 28px;
+	color: #fbc847;
 }
-article.article-summary::before {
-	content: '';
-	position: absolute;
-	/* background: url(imgs1/title_left.png) no-repeat center; */
-	left: 117px;
-  top: 66px;
-	width: 70px;
-	height: 244px;
-}
-article.article-summary::after {
-	content: '';
-	position: absolute;
-	width: 210mm;
-	height: 120mm;
-	bottom: 0;
-	left: 0;
-	/* background: url(imgs1/Image1.svg) no-repeat center; */
-	background-size: cover;
-}
-article.article-summary h2{
-	font-family: SourceHanSansCN-Medium;
-	margin: 80px 0 30px 124px;
-	font-size: 20px;
-	color: #00ABA9;
-	position: relative;
-	display: inline-block;
-	string-set: heading content();
-	line-height: 30px;
-}
-article.article-summary h2::before {
-	content: '';
-	position: absolute;
-	width: 46px;
-	height: 40px;
-	top: 5px;
-  	right: -32px;
-	/* background: url(imgs1/title_right.png) no-repeat center; */
-	background-size: cover;
-}
-article.article-summary h2::after {
-	position: absolute;
-	top: 1px;
-  	left: -46px;
-	color: #FFFFFF;
-}
-article:nth-child(3) h2::after {content: '1';}
-article:nth-child(5) h2::after {content: '2';}
-article:nth-child(7) h2::after {content: '3';}
-article:nth-child(9) h2::after {content: '4';}
-article:nth-child(11) h2::after {content: '5';}
-article:nth-child(13) h2::after {content: '6';}
-article:nth-child(15) h2::after {content: '7';}
-article.article-summary ul.summary-list{
-	margin-left: 144px;
-}
-article.article-summary ul.summary-list li{
-	font-family: SourceHanSansCN-Normal;
-	font-size: 12px;
-	color: #231916;
-	line-height: 15px;
-	margin-bottom: 10px;
-	padding-left: 26px;
-	position: relative;
-}
-article.article-summary ul.summary-list li::before {
-	content: '';
-	position: absolute;
-	width: 15px;
-	height: 15px;
-	top: 0px;
-  	left: 27px;
-	/* background: url(imgs1/list2.svg) no-repeat center; */
-	background-size: cover;
-}
-/* 3级标题 */
+
+/* heading 3 */
 article section h3{
-	font-family: SourceHanSansCN-Medium;
+	font-family: SimHei;
 	font-size: 18px;
-	color: #00ABA9;
+	color: #fbc847;
 	line-height: 35px;
 	margin: 15px 0;
 	position: relative;
