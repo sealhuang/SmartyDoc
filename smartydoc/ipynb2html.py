@@ -15,6 +15,7 @@ class IpyNBHTMLParser(HTMLParser):
         self._h2_idx = 0
         self._h3_idx = 0
         self._h4_idx = 0
+        self._anchor_link = False
 
     def handle_starttag(self, tag, attrs):
         tag_content = {}
@@ -113,6 +114,8 @@ class IpyNBHTMLParser(HTMLParser):
         # XXX: tags to be removed
         elif tag in ['a']:
             self.tag_stack.append(tag)
+            if 'class' in tag_content and tag_content['class']=='anchor-link':
+                self._anchor_link = True
         else:
             h_content = [tag]
             for key in tag_content:
@@ -123,6 +126,8 @@ class IpyNBHTMLParser(HTMLParser):
         if self.tag_stack[-1]==tag:
             if tag=='a':
                 self.tag_stack.pop(-1)
+                if self._anchor_link:
+                    self._anchor_link = False
             else:
                 self.out_html += '</' + tag + '>\n'
                 self.tag_stack.pop(-1)
@@ -141,7 +146,7 @@ class IpyNBHTMLParser(HTMLParser):
             print('Unrecognized tag %s'%(tag))
 
     def handle_data(self, data):
-        if not self.tag_stack[-1]=='a':
+        if not self._anchor_link:
             self.out_html += data
 
     def handle_charref(self, name):
