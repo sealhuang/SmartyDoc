@@ -129,9 +129,12 @@ unknown type  {{ cell.type }}
 {%- endblock data_html %}
 
 {% block data_markdown scoped -%}
+{#
 <div class="output_markdown rendered_html output_subarea {{ extra_class }}">
 {{ output.data['text/markdown'] | markdown2html }}
 </div>
+#}
+{{ output.data['text/markdown'] | markdown2html }}
 {%- endblock data_markdown %}
 
 {% block data_png scoped %}
