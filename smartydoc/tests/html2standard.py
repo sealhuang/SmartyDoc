@@ -8,7 +8,7 @@ def module_test():
     content = [line.strip() for line in content]
     content = [line for line in content if len(line)]
 
-    parser = IpyNBHTMLParser()
+    parser = IpyNBHTMLParser(include_foreword=False)
     for line in content:
         #print(line)
         #print(parser.tag_stack)

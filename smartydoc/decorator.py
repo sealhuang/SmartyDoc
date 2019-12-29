@@ -31,6 +31,12 @@ class FigCounter(object):
         else:
             print('Invalid input value, only int data type supported.')
 
+    def get_current_num(self):
+        """Get next counter number."""
+        # increasing counter number
+        self.current_num += 1
+        return self.current_num - 1
+
     def add_title(self, fig, title, y_pos=-0.2, w=None):
         """
         `fig`: a plotly/svgutils Figure object, or the path of a png file.
