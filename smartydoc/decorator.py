@@ -22,6 +22,7 @@ class FigCounter(object):
         self.current_num = start_num
         self.font_size = font_size
         self.font_family = font_family
+        # defaul width: 600 px ~ 169 mm
         self.output_width = 600
 
     def set_width(self, w):
@@ -125,18 +126,36 @@ class FigCounter(object):
             _scalar = _w * 1.0 / fig.width.value
             _h = fig.height.value * _scalar + 25
 
+            # if w < default output width, add margin
+            if _w < self.output_width:
+                _outw = self.output_width
+                _move_x = int((_outw - _w) / 2)
+            else:
+                _outw = _w
+                _move_x = int((_outw - _w) / 2)
+
             # add title
-            new_figure = sc.Figure(_w, _h,
-                                   fig.scale(_scalar),
+            new_figure = sc.Figure(_outw, _h,
+                                   fig.scale(_scalar).move(_move_x, 0),
                                    sc.Text(title_txt,
-                                           _w/2,
-                                           _h-5,
+                                           _outw / 2,
+                                           _h - 5,
                                            anchor='middle',
                                            size=self.font_size,
                                            font=self.font_family,
-                                           #weight="bold",
                                            )
             )
+            
+            #new_figure = sc.Figure(_w, _h,
+            #                       fig.scale(_scalar),
+            #                       sc.Text(title_txt,
+            #                               _w/2,
+            #                               _h-5,
+            #                               anchor='middle',
+            #                               size=self.font_size,
+            #                               font=self.font_family,
+            #                               )
+            #)
         
             # increasing counter number
             self.current_num += 1
