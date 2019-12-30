@@ -255,6 +255,7 @@ class IpyNBHTMLParser(HTMLParser):
                     if include_article_summary == 'toc':
                         h2_id = line[13:-2]
                         f.write('<article class="article-toc">\n')
+                        f.write('<article_num>%s</article_num>\n'%(h2_idx))
                         f.write('<h2>%s</h2>\n'%(h2_id))
                         h3s = self.toc_tree[h2_id]
                         if h3s:
@@ -270,6 +271,7 @@ class IpyNBHTMLParser(HTMLParser):
                     if include_article_summary == 'intro':
                         h2_id = line[13:-2]
                         f.write('<article class="article-summary">\n')
+                        f.write('<article_num>%s</article_num>\n'%(h2_idx))
                         f.write('<h2>%s</h2>\n'%(h2_id))
                         if h2_idx in self._article_intro:
                             f.write('<article_intro>')
