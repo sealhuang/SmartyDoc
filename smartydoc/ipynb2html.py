@@ -266,6 +266,7 @@ class IpyNBHTMLParser(HTMLParser):
                                 f.write('<li>%s</li>\n'%(h3))
                             f.write('</ul>\n')
                         f.write('</article>\n')
+                        h2_idx += 1
  
                     # add article introduction
                     if include_article_summary == 'intro':
@@ -280,9 +281,13 @@ class IpyNBHTMLParser(HTMLParser):
                         f.write('</article>\n')
                         h2_idx += 1
 
-                if line.startswith('<h2 id=') and include_article_summary:
+                if line.startswith('<h2 id=') and \
+                   include_article_summary and \
+                   toc_over_flag:
                     continue
-                if line[-5:]=='</h2>' and include_article_summary:
+                if line[-5:]=='</h2>' and \
+                   include_article_summary and \
+                   toc_over_flag:
                     continue
                 
                 f.write(line+'\n')
