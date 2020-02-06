@@ -1,0 +1,71 @@
+#! /usr/bin/env python
+# vi: set ft=python sts=4 ts=4 sw=4 et:
+
+import os
+import sys
+import argparse
+
+from smartydoc.ipynb2html import IpyNBHTMLParser
+
+
+def html2standard(in_file, out_file, toc_level=1,
+                  include_foreword=False, include_article_summary=False):
+    # load test.html
+    content = open(in_file).readlines()
+    content = [line.strip() for line in content]
+    content = [line for line in content if len(line)]
+
+    parser = IpyNBHTMLParser(include_foreword=include_foreword)
+    for line in content:
+        #print(line)
+        #print(parser.tag_stack)
+        parser.feed(line)
+
+    parser.export2html(out_file, toc_level=toc_level,
+                       include_article_summary=include_article_summary)
+
+def main():
+    parser = argparse.ArgumentParser(
+        description='Convert raw html into standard format'
+    )
+
+    parser.add_argument(
+        '--in',
+        dest='in_file',
+        help='input html file',
+        required=True,
+    )
+    parser.add_argument(
+        '--toc_level',
+        type=int,
+        default=1,
+        help='maximum level of nested sections to display on the TOC',
+    )
+    parser.add_argument(
+        '--include_foreword',
+        default=False,
+        action='store_true',
+        help='inlcude foreword section before TOC',
+    )
+    parser.add_argument(
+        '--include_article_summary',
+        choices=['toc', 'intro', False],
+        default=False,
+        help='display an article summary before each article',
+    )
+    parser.add_argument(
+        '--out_file',
+        help='output standard html file',
+        required=True,
+    )
+
+    args = parser.parse_args()
+
+    html2standard(args.in_file, args.out_file, toc_level=args.toc_level,
+                  include_foreword=args.include_foreword,
+                  include_article_summary=args.include_article_summary)
+
+
+if __name__=='__main__':
+    main()
+

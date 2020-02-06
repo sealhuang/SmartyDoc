@@ -1,0 +1,34 @@
+Type: IPython Notebook Extension
+Name: Printview2
+Description: Calls nbconvert and SmartyDoc tools, shows the generated output in a new browser tab
+Link: readme.md
+Icon: icon.png
+Main: main.js
+Compatibility: 4.x, 5.x
+Parameters:
+- name: printview2.has_foreword
+  description: the document has a foreword section before TOC
+  input_type: checkbox
+  default: false
+- name: printview2.toc_level
+  description: maximum level of nested sections to display on the TOC
+  input_type: number
+  min: 0
+  step: 1
+  default: 1
+- name: printview2.include_article_summary
+  description: display an article summary before each article, or not
+  input_type: string
+  default: none
+- name: printview2.nbconvert_options
+  description: nbconvert options
+  input_type: string
+  default: --execute --to html --template=./templates/report_sample.tpl --output tmp.html
+- name: printview2.open_tab
+  description: open a new tab in the browser to display nbconvert output (for html and pdf only)
+  input_type: checkbox
+  default: true
+- name: printview2.to_pdf
+  description: export to pdf format
+  input_type: checkbox
+  default: false
