@@ -31,4 +31,4 @@ Parameters:
 - name: printview2.to_pdf
   description: export to pdf format
   input_type: checkbox
-  default: false
+  default: true

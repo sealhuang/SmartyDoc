@@ -14,8 +14,8 @@ define([
     "use strict";
 
     var nbconvert_options = '--execute --to html --template=./templates/report_sample.tpl --output tmp.html';
-    var to_pdf = false;
-    var extension = '.html';
+    var to_pdf = true;
+    var pdf_command = ' ';
     var open_tab = true;
     var toc_level = 1;
     var include_foreword = ' ';
@@ -31,8 +31,7 @@ define([
         }
 	if (config.data.hasOwnProperty('printview2.to_pdf') ) {
 	    if (typeof(config.data.printview2.to_pdf) === "boolean") {
-		to_pdf = config.data.printview2.to_pdf
-                if (to_pdf === true) extension = '.pdf';
+		to_pdf = config.data.printview2.to_pdf;
             }
         }
         if (config.data.hasOwnProperty('printview2.open_tab') ) {
@@ -67,8 +66,16 @@ define([
         events.off('notebook_saved.Notebook');
         var kernel = IPython.notebook.kernel;
         var name = IPython.notebook.notebook_name;
-        var out_file = utils.splitext(name)[0] + extension;
-        var command = 'import os; os.system(\'jupyter nbconvert ' + nbconvert_options + ' \"' + name + '\"\');' + 'os.system(\'trans2std --in tmp.html --out_file ' + out_file + ' --toc_level ' + toc_level + include_foreword + include_article_summary + '\');' + 'os.system(\'rm tmp.html\')';
+        var out_html = utils.splitext(name)[0] + '.html';
+        var out_pdf = utils.splitext(name)[0] + '.pdf';
+        var command = 'import os; os.system(\'jupyter nbconvert ' + nbconvert_options + ' \"' + name + '\"\');' + 'os.system(\'trans2std --in tmp.html --out_file ' + out_html + ' --toc_level ' + toc_level + include_foreword + include_article_summary + '\');' + 'os.system(\'rm tmp.html\');'
+	if (to_pdf === true) {
+            pdf_command = 'weasyprint ' + out_html + ' ' + out_pdf;
+	    command = command + 'os.system(\'' + pdf_command + '\');';
+            var out_file = out_pdf;
+	} else {
+	    var out_file = out_html;
+	}
 
         function callback() {
             if (open_tab === true) window.open(out_file, '_blank');
