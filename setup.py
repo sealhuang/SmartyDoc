@@ -10,7 +10,7 @@ setup(
     author='Lijie Huang',
     author_email='huanglijie@outlook.com',
     packages=['smartydoc'],
-    scripts=['bin/trans2std']
+    scripts=['bin/trans2std'],
     package_data={'smarty': ['template/*']},
     install_requires=[
         'plotly'
