@@ -26,34 +26,43 @@ define([
      */
     var initialize = function () {
         var config = IPython.notebook.config;
-        if (config.data.hasOwnProperty('printview2.nbconvert_options') ) {
-            nbconvert_options = config.data.printview_nbconvert_options;
-        }
-	if (config.data.hasOwnProperty('printview2.to_pdf') ) {
-	    if (typeof(config.data.printview2.to_pdf) === "boolean") {
-		to_pdf = config.data.printview2.to_pdf;
+	if (config.data.hasOwnProperty('printview2') ) {
+	    var pv_config = config.data.printview2;
+
+            if (pv_config.hasOwnProperty('nbconvert_options') ) {
+                nbconvert_options = pv_config.nbconvert_options;
             }
-        }
-        if (config.data.hasOwnProperty('printview2.open_tab') ) {
-            if (typeof(config.data.printview2.open_tab) === "boolean") {
-                open_tab = config.data.printview_open_tab;
-            }
-        }
-        if (config.data.hasOwnProperty('printview2.has_foreword') ) {
-            if (typeof(config.data.printview2.has_foreword) === "boolean") {
-                if (config.data.printview2.has_foreword === true) {
-                    include_foreword = ' --include_foreword ';
+
+            if (pv_config.hasOwnProperty('to_pdf') ) {
+                if (typeof(pv_config.to_pdf) === "boolean") {
+                    to_pdf = pv_config.to_pdf;
                 }
             }
-        }
-        if (config.data.hasOwnProperty('printview2.toc_level') ) {
-            toc_level = config.data.printview2.toc_level;
-        }
-        if (config.data.hasOwnProperty('printview2.include_article_summary') ) {
-            if (config.data.printview2.include_article_summary === 'none') {
-                include_article_summary = ' ';
-	    } else {
-		include_article_summary = ' --include_article_summary ' + config.data.printview2.include_article_summary;
+
+            if (pv_config.hasOwnProperty('open_tab') ) {
+                if (typeof(pv_config.open_tab) === "boolean") {
+                    open_tab = pv_config.open_tab;
+                }
+            }
+
+            if (pv_config.hasOwnProperty('has_foreword') ) {
+                if (typeof(pv_config.has_foreword) === "boolean") {
+                    if (pv_config.has_foreword === true) {
+                        include_foreword = ' --include_foreword ';
+                    }
+                }
+            }
+
+            if (pv_config.hasOwnProperty('toc_level') ) {
+                toc_level = pv_config.toc_level;
+            }
+
+            if (pv_config.hasOwnProperty('include_article_summary') ) {
+                if (pv_config.include_article_summary === 'none') {
+                    include_article_summary = ' ';
+	        } else {
+		    include_article_summary = ' --include_article_summary ' + pv_config.include_article_summary;
+                }
             }
         }
     };
@@ -96,7 +105,7 @@ define([
                 help   : 'Create static print view',
                 icon   : 'fa-print',
                 handler: nbconvertPrintView
-            }, 'create-static-printview',  'printview'),
+            }, 'create-static-printview',  'printview2'),
         ])).find('.btn').attr('id', 'doPrintView');
         return IPython.notebook.config.loaded.then(initialize);
     };

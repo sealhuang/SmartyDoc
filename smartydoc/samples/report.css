@@ -1,6 +1,6 @@
 @charset "UTF-8";
 /* font */
-/* 
+ 
 @font-face {
 	font-family: SimSun;
 	src: url(fonts/SimSun.ttf);
@@ -9,7 +9,7 @@
 	font-family: SimHei;
 	src: url(fonts/SimHei.ttf);
 }
-*/
+
 /* page config */
 @page {
 	margin: 20mm;
@@ -91,33 +91,14 @@
 		background: none;
 		content: none;
 	}
-	@top-center {
-		/* background-size: cover;
-		content: '';
-		display: block;
-		height: 5.5mm;
-		opacity: 1;
-		width: 170mm;
-		margin-bottom: 5.5mm; */
-	}
-	@top-right {
-		/* content: string(heading);
-		font-size: 10px;
-		height: 5.5mm;
-		vertical-align: middle;
-		width: 100%;
-		font-family: Heiti;
-		margin-bottom: 5.5mm;
-		color: #000000; */
-	}
 	@bottom-center{
 		text-align: center;
 		content: 'SmartyDoc Sample';
-		font-size: 8px;
+		font-size: 12px;
 		color: #3F3F3F;
 	}
-	@bottom-right {
-		background: #00ABA9;
+	@bottom-left {
+		background: #fbc847;
 		content: counter(page);
 		height: 5.5mm;
 		text-align: center;
@@ -132,15 +113,6 @@
 		background: none;
 		content: none;
 	}
-	@top-center {
-		/* background-size: cover;
-		content: '';
-		display: block;
-		height: 5.5mm;
-		opacity: 1;
-		width: 170mm;
-		margin-bottom: 5.5mm; */
-	}
 	@top-right {
 		content: string(heading);
 		font-size: 10px;
@@ -154,11 +126,11 @@
 	@bottom-center{
 		text-align: center;
 		content: 'SmartyDoc Sample';
-		font-size: 8px;
+		font-size: 12px;
 		color: #3F3F3F;
 	}
-	@bottom-left {
-		background: #00ABA9;
+	@bottom-right {
+		background: #fbc847;
 		content: counter(page);
 		height: 5.5mm;
 		text-align: center;
@@ -171,7 +143,6 @@
 /* global style */
 html{
 	font-family: SimSun;
-	font-size: 11pt;
 	color: #3F3F3F;
 }
 body,h1,h2,h3,h4,h5,h6,p,div,ul,li,ol,a{
@@ -183,7 +154,8 @@ html body article{
 	display: block;
 	/* width: 210mm;
 	height: 297mm; */
-	font-size: 12px;
+	font-size: 14px;
+	line-height: 28px;
 	text-indent: 2em;
 	min-height: 257mm;
 	break-before: right;
@@ -192,12 +164,21 @@ article section{
 	margin: 10px 0;
 	line-height: 28px;
 }
-article section #img{
+article .medium,
+article .large,
+article .small
+{
 	text-align: center;
-	margin:10px 0;
+	margin: 20px 0;
 }
-article section #img img{
+article .small img{
+	width: 60%;
+}
+article .medium img{
 	width: 80%;
+}
+article .large img{
+	width: 100%;
 }
 article table{
 	margin: 10px 0;
@@ -213,25 +194,30 @@ article table th,article table td{
 article table thead th,
 article table strong{
 	font-family: SimHei;
-	color:#00ABA9;
+	color:#fbc847;
 }
-article section strong{
-	font-family: SimSun;
+article strong{
+	font-family: SimHei;
 }
-article section blockquote{
-	background: #DBF6F6;
+article rightalign{
+	display: block;
+	text-align: right;
+}
+article blockquote{
+	background: #fbc847;
 	border-radius: 8px;
 	padding: 5px;
-	margin: 10px 0;
+	margin: 15px 0;
 	line-height: 25px;
 }
 article section ul li{
 	display: inline-block;
 	text-indent: 0;
-	border:1px solid #00ABA9;
+	border:1px solid #fbc847;
 	border-radius: 5px;
 	padding: 0 6px;
 	line-height: 21px;
+	height: 19px;
 	margin: 2px 0;
 }
 /* cover */
@@ -241,7 +227,7 @@ article#cover{
 	height: 297mm;
 	text-indent: 0;
 	text-align: center;
-	background: url(imgs/cover.png) no-repeat center;
+	background: url(imgs/common/cover.png) no-repeat center;
 	background-size: cover;
 }
 article#cover h1{
@@ -253,15 +239,26 @@ article#cover h1{
 	letter-spacing: 5px;
 }
 article#cover div{
-	padding-top: 15mm;
-	font-size: 14px;
+	margin-top: 160mm;
+	padding-top:5mm;
+	padding-bottom: 7mm;
+	text-align: center;
+	position: relative;
+	background: #fbc847;
+
 }
 article#cover address{
-	display: none;
+	font-family: SimHei;
+	font-style: normal;
+	line-height: 37px;
+	color: #393939;
+	font-size: 20px;
 }
 article#cover testdate{
 	font-family: SimHei;
-	color: #fbc847;
+	font-style: normal;
+	line-height: 35px;
+	color: #393939;
 	font-size: 20px;
 }
 
@@ -276,12 +273,15 @@ article#contents h2{
 	text-align: center;
 	margin-bottom: 14px;
 	string-set: heading content();
-	font-size: 20px;
+	font-size: 22px;
 	color: #fbc847;
 }
 article#contents ul li{
-	font-size: 12px;
 	position: relative;
+	margin-bottom: 11px;
+	height: 16px;
+	font-size: 14px;
+	font-family: SimHei;
 }
 article#contents ul li a.toc-title{
 	color: inherit;
@@ -320,6 +320,7 @@ article h2{
 	font-family: SimHei;
 	font-size: 28px;
 	color: #fbc847;
+	margin: 15px 0;
 }
 
 /* heading 3 */
@@ -339,69 +340,8 @@ article section h3::before {
 	content: '';
 	width: 25px;
 	height: 25px;
-	/* background: url(imgs1/list2.svg) no-repeat center; */
 	background-size: cover;
 	position: absolute;
 	left: 0px;
 	top: 6px;
 }
-/* 4级标题 */
-article#前言 h5,
-article#各年级的阅读表现分析 h4,
-article#分级阅读教学方案 h4,
-article#优秀实践故事 h4,
-article#附表结果 h5
-{
-	font-family: SourceHanSansCN-Regular;
-	line-height: 14px;
-	font-size: 14px;
-	color: #00ABA9;
-	padding-left: 20px;
-	margin: 6px 0 12px 0;
-	position: relative;
-}
-article#前言 h5::before,
-article#各年级的阅读表现分析 h4::before,
-article#分级阅读教学方案 h4::before,
-article#优秀实践故事 h4::before,
-article#附表结果 h5::before
-{
-	content:'';
-	width: 14px;
-	height: 14px;
-	background: #00ABA9;
-	position: absolute;
-	left: 24px;
-    top: 0;
-}
-/* 4级标题以下 */
-article#优秀实践故事 section{
-	page-break-before: always;
-}
-article#优秀实践故事 section rightalign{
-	text-align: right;
-	display: block;
-	width: 100%;
-}
-article#优秀实践故事 h5
-{
-	font-family: SourceHanSansCN-Regular;
-	line-height: 14px;
-	font-size: 14px;
-	color: #00ABA9;
-	padding-left: 20px;
-	margin: 5px 0;
-	position: relative;
-	padding-left: 10px;
-}
-article#优秀实践故事 h5::before{
-	content:'';
-	width: 3px;
-	height: 14px;
-	background: #00ABA9;
-	position: absolute;
-	left: 24px;
-	top: 0;
-}
-/* 二维码 */
-article#结语 section #img img{width: 150px;}
