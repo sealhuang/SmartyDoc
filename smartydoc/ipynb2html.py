@@ -5,7 +5,7 @@ from collections import OrderedDict
 from html.parser import HTMLParser
 
 class IpyNBHTMLParser(HTMLParser):
-    def __init__(self, include_foreword=False):
+    def __init__(self, include_foreword=False, add_heading_number=True):
         super(IpyNBHTMLParser, self).__init__()
         # processed html
         self.out_html = ''
@@ -22,6 +22,7 @@ class IpyNBHTMLParser(HTMLParser):
         self._cur_toc_pos = OrderedDict()
 
         # heading index vars
+        self._add_heading_number = add_heading_number
         self._include_foreword = include_foreword
         if self._include_foreword:
             # if True, the first h2 section is treated as foreword, thus
@@ -82,8 +83,12 @@ class IpyNBHTMLParser(HTMLParser):
             elif tag=='h2' and self._h2_idx==0:
                 self.out_html += '<' + ' '.join(_content_tmp) + '>'
             else:
-                self.out_html += '<' + ' '.join(_content_tmp) + '>' + \
-                                 str(self._h2_idx) + '. '
+                if self._add_heading_number:
+                    self.out_html += '<' + ' '.join(_content_tmp) + '>' + \
+                                     str(self._h2_idx) + '. '
+                else:
+                    self.out_html += '<' + ' '.join(_content_tmp) + '>'
+
 
         if tag=='h3':
             # tag completion
@@ -107,7 +112,7 @@ class IpyNBHTMLParser(HTMLParser):
                     _content_tmp.append("%s='%s'"%(key, tag_content[key]))
             
             # skip foreword
-            if self._h2_idx>0:
+            if self._h2_idx>0 and self._add_heading_number:
                 num_str = '.'.join([str(self._h2_idx), str(self._h3_idx)])
                 self.out_html += '<' + ' '.join(_content_tmp) + '>' + \
                                  num_str + ' '
@@ -126,7 +131,7 @@ class IpyNBHTMLParser(HTMLParser):
                 else:
                     _content_tmp.append("%s='%s'"%(key, tag_content[key]))
 
-            if self._h2_idx>0:
+            if self._h2_idx>0 and self._add_heading_number:
                 num_str = '.'.join([str(self._h2_idx),
                                     str(self._h3_idx),
                                     str(self._h4_idx)])

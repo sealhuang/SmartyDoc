@@ -18,6 +18,7 @@ define([
     var pdf_command = ' ';
     var open_tab = true;
     var toc_level = 1;
+    var add_heading_number = ' ';
     var include_foreword = ' ';
     var include_article_summary = ' ';
 
@@ -36,6 +37,14 @@ define([
             if (pv_config.hasOwnProperty('to_pdf') ) {
                 if (typeof(pv_config.to_pdf) === "boolean") {
                     to_pdf = pv_config.to_pdf;
+                }
+            }
+ 
+           if (pv_config.hasOwnProperty('add_heading_number') ) {
+                if (typeof(pv_config.add_heading_number) === "boolean") {
+		    if (pv_config.add_heading_number == true) {
+                        add_heading_number = ' --add_heading_number ';
+                    }
                 }
             }
 
@@ -77,7 +86,7 @@ define([
         var name = IPython.notebook.notebook_name;
         var out_html = utils.splitext(name)[0] + '.html';
         var out_pdf = utils.splitext(name)[0] + '.pdf';
-        var command = 'import os; os.system(\'jupyter nbconvert ' + nbconvert_options + ' \"' + name + '\"\');' + 'os.system(\'trans2std --in tmp.html --out_file ' + out_html + ' --toc_level ' + toc_level + include_foreword + include_article_summary + '\');' + 'os.system(\'rm tmp.html\');'
+        var command = 'import os; os.system(\'jupyter nbconvert ' + nbconvert_options + ' \"' + name + '\"\');' + 'os.system(\'trans2std --in tmp.html --out_file ' + out_html + ' --toc_level ' + toc_level + add_heading_number + include_foreword + include_article_summary + '\');' + 'os.system(\'rm tmp.html\');'
 	if (to_pdf === true) {
             pdf_command = 'weasyprint ' + out_html + ' ' + out_pdf;
 	    command = command + 'os.system(\'' + pdf_command + '\');';

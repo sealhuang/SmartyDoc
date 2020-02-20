@@ -6,6 +6,10 @@ Icon: icon.png
 Main: main.js
 Compatibility: 4.x, 5.x
 Parameters:
+- name: printview2.add_heading_number
+  description: add index before headings
+  input_type: checkbox
+  default: true
 - name: printview2.has_foreword
   description: the document has a foreword section before TOC
   input_type: checkbox

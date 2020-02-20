@@ -8,14 +8,15 @@ import argparse
 from smartydoc.ipynb2html import IpyNBHTMLParser
 
 
-def html2standard(in_file, out_file, toc_level=1,
+def html2standard(in_file, out_file, toc_level=1, add_heading_number=True,
                   include_foreword=False, include_article_summary=False):
     # load test.html
     content = open(in_file).readlines()
     content = [line.strip() for line in content]
     content = [line for line in content if len(line)]
 
-    parser = IpyNBHTMLParser(include_foreword=include_foreword)
+    parser = IpyNBHTMLParser(include_foreword=include_foreword,
+                             add_heading_number=add_heading_number)
     for line in content:
         #print(line)
         #print(parser.tag_stack)
@@ -42,6 +43,12 @@ def main():
         help='maximum level of nested sections to display on the TOC',
     )
     parser.add_argument(
+        '--add_heading_number',
+        default=False,
+        action='store_true',
+        help='add index before headings',
+    )
+    parser.add_argument(
         '--include_foreword',
         default=False,
         action='store_true',
@@ -62,6 +69,7 @@ def main():
     args = parser.parse_args()
 
     html2standard(args.in_file, args.out_file, toc_level=args.toc_level,
+                  add_heading_number=args.add_heading_number,
                   include_foreword=args.include_foreword,
                   include_article_summary=args.include_article_summary)
 
