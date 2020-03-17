@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="136px" height="183px" viewBox="0 0 136 183" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 53.2 (72643) - https://sketchapp.com -->
+    <title>分组 3</title>
+    <desc>Created with Sketch.</desc>
+    <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="page6" transform="translate(-308.000000, -461.000000)">
+            <g id="分组-3" transform="translate(308.000000, 458.000000)">
+                <text id="得分：" font-family="PingFang SC" font-size="14" font-weight="normal" letter-spacing="0.100000001" fill="#3F3F3F">
+                    <tspan x="10" y="15">得分：</tspan>
+                </text>
+                <text id="超过同年级学生比例-copy" font-family="PingFang SC" font-size="14" font-weight="normal" letter-spacing="0.100000001" fill="#3F3F3F">
+                    <tspan x="10" y="184">超过同年级学生比例</tspan>
+                </text>
+                <rect id="矩形-copy-17" fill="#0AD1CF" x="0" y="4" width="5" height="13" rx="1"></rect>
+                <rect id="矩形-copy-18" fill="#0AD1CF" x="0" y="37" width="5" height="13" rx="1"></rect>
+                <rect id="矩形-copy-19" fill="#0AD1CF" x="0" y="173" width="5" height="13" rx="1"></rect>
+                <text id="等级：" font-family="PingFang SC" font-size="14" font-weight="normal" letter-spacing="0.100000001" fill="#3F3F3F">
+                    <tspan x="10" y="48">等级：</tspan>
+                </text>
+            </g>
+        </g>
+    </g>
+</svg>
