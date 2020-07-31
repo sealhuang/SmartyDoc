@@ -42,7 +42,7 @@ class IpyNBHTMLParser(HTMLParser):
             tag_content[attr[0]] = attr[1]
 
         # XXX: unpaired tags to be extened
-        UNPAIRED_TAGS = ['meta', 'link', 'img', 'br']
+        UNPAIRED_TAGS = ['meta', 'link', 'img', 'br', 'hr']
 
         SPECIAL_TAGS = ['h1', 'h2', 'h3', 'h4', 'article_intro', 'a']
 
