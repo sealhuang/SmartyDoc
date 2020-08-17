@@ -1,10 +1,10 @@
 # SmartyDoc
 
-SmartyDoc is a smart solution helping Jupyter users to create gorgeous PDF
-documents, especially for data analytics field. It provides convenient tools
-to convert **Jupyter Notebook** `ipynb` file into a HTML page with 'standard'
-structure, thus the users could render the page with customized css file, and
-further export to PDF format.
+SmartyDoc provides an easy-to-use pipeline helping Jupyter users to create
+gorgeous PDF documents, especially for data analytics field.
+It provides convenient tools to convert **Jupyter Notebook** `ipynb` file into
+a HTML page with 'standard' structure, thus the users could render the page with
+customized css file, and further export to PDF format.
 
 We also provide a Jupyter Notebook Extension named *printview2*, helping you
 to create PDF document with few clicks.
