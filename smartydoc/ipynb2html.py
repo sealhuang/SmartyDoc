@@ -175,7 +175,8 @@ class IpyNBHTMLParser(HTMLParser):
             self.out_html += '<' + ' '.join(_content_tmp) + '>\n'
 
         # generate TOC tree
-        if tag in ['h2', 'h3', 'h4'] and self._h2_idx>0:
+        if (tag in ['h2', 'h3'] and self._h2_idx>0) or \
+           (tag in ['h4'] and self._h3_idx>0):
             _tag_level = int(tag[1])
             _cur_toc_tags = list(self._cur_toc_pos.keys())
             _ins_toc_level = sum(
