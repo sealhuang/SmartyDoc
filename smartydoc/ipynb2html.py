@@ -50,7 +50,7 @@ class IpyNBHTMLParser(HTMLParser):
         if tag=='h1' or tag=='h2':
             # tag completion
             while self._tag_stack[-1] in ['article', 'article_content', 'div',
-                                         'section']:
+                                          'section', 'subsection']:
                 self.out_html += '</' + self._tag_stack[-1] + '>\n'
                 self._tag_stack.pop(-1)
 
@@ -92,7 +92,7 @@ class IpyNBHTMLParser(HTMLParser):
 
         if tag=='h3':
             # tag completion
-            if self._tag_stack[-1]=='section':
+            while self._tag_stack[-1] in ['section', 'subsection']:
                 self.out_html += '</' + self._tag_stack[-1] + '>\n'
                 self._tag_stack.pop(-1)
 
@@ -120,8 +120,15 @@ class IpyNBHTMLParser(HTMLParser):
                 self.out_html += '<' + ' '.join(_content_tmp) + '>'
         
         if tag=='h4':
+            # tag completion
+            while self._tag_stack[-1] in ['subsection']:
+                self.out_html += '</' + self._tag_stack[-1] + '>\n'
+                self._tag_stack.pop(-1)
             # count h4-number
             self._h4_idx += 1
+            # add new section
+            self._tag_stack.append('subsection')
+            self.out_html += "<subsection id='%s'>\n"%(tag_content['id'])
             # add tag h
             self._tag_stack.append(tag)
             _content_tmp = [tag]
@@ -215,7 +222,7 @@ class IpyNBHTMLParser(HTMLParser):
 
         elif tag=='body':
             while self._tag_stack[-1] in ['article', 'article_content',
-                                         'div', 'section']:
+                                         'div', 'section', 'subsection']:
                 self.out_html += '</' + self._tag_stack[-1] + '>\n'
                 self._tag_stack.pop(-1)
             self.out_html += '</body>\n'
