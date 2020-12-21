@@ -23,3 +23,10 @@ $ python setup.py install
 To install the Jupyter Notebook Extension *printview2*, you can copy the
 printview2 directory into the Jupyter nbextensions directory.
 
+## Note
+
+* In ubuntu system, we can create a `.fonts` directory in the home, and put
+new fonts in it which used in html and svg files.
+
+* In order to create static images successfully using plotly, we should install
+xvfb.
