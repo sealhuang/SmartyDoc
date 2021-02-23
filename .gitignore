@@ -3,3 +3,4 @@
 *.pyc
 *.pyd
 .ipynb_checkpoints
+*.ttf
