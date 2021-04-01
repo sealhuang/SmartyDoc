@@ -118,6 +118,7 @@ class FigCounter(object):
 
             return fig
         else:
+            assert isinstance(y_pos, float) and y_pos<=1 and y_pos>=0
             # compute image size
             if w:
                 _w = w
@@ -139,23 +140,12 @@ class FigCounter(object):
                                    fig.scale(_scalar).move(_move_x, 0),
                                    sc.Text(title_txt,
                                            _outw / 2,
-                                           _h - 5,
+                                           int(_h*(1-y_pos)),
                                            anchor='middle',
                                            size=self.font_size,
                                            font=self.font_family,
                                            )
             )
-            
-            #new_figure = sc.Figure(_w, _h,
-            #                       fig.scale(_scalar),
-            #                       sc.Text(title_txt,
-            #                               _w/2,
-            #                               _h-5,
-            #                               anchor='middle',
-            #                               size=self.font_size,
-            #                               font=self.font_family,
-            #                               )
-            #)
         
             # increasing counter number
             self.current_num += 1
