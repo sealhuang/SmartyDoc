@@ -118,9 +118,6 @@ class FigCounter(object):
 
             return fig
         else:
-            if y_pos==-0.2:
-                y_pos=0.1
-            assert isinstance(y_pos, float) and y_pos<=1 and y_pos>=0
             # compute image size
             if w:
                 _w = w
@@ -129,6 +126,12 @@ class FigCounter(object):
             _scalar = _w * 1.0 / fig.width.value
             _h = fig.height.value * _scalar + 25
 
+            if y_pos==-0.2:
+                text_y = _h - 5
+            else:
+                assert y_pos<=1 and y_pos>=0
+                text_y = int(_h*(1-y_pos))
+            
             # if w < default output width, add margin
             if _w < self.output_width:
                 _outw = self.output_width
@@ -142,7 +145,7 @@ class FigCounter(object):
                                    fig.scale(_scalar).move(_move_x, 0),
                                    sc.Text(title_txt,
                                            _outw / 2,
-                                           int(_h*(1-y_pos)),
+                                           text_y,
                                            anchor='middle',
                                            size=self.font_size,
                                            font=self.font_family,
