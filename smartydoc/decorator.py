@@ -118,6 +118,8 @@ class FigCounter(object):
 
             return fig
         else:
+            if y_pos==-0.2:
+                y_pos=0.1
             assert isinstance(y_pos, float) and y_pos<=1 and y_pos>=0
             # compute image size
             if w:
